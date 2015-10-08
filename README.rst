@@ -42,6 +42,20 @@ You should now be able to run the development server::
 
     (taytay)$ python manage.py runserver
 
+Connecting to the API
+---------------------
+
+To connect to the API at baelor.io, you'll need to create a user using the
+following curl command ::
+
+    curl -H "Content-Type: application/json" -X POST -d
+    '{"username": "yourusername","email_address": "youremail",
+    "password": "yourpassword","password_confirm": "yourpassword"}'
+    http://baelor.io/api/v0/users
+
+You should receive an API key in the response.
+
+
 
 Testing
 -------
