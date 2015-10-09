@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>{% load staticfiles %}
 <html lang="en" class="no-js">
 <head>
     <meta charset="utf-8">
@@ -10,6 +10,7 @@
     {% endblock %}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css"  media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/taytay.css' %}"  media="screen,projection">
     {% block extra-css %}
     {% endblock %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
