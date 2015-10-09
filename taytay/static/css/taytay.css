@@ -33,7 +33,7 @@ nav .brand-logo .taylor {
     font-family: "satisfaction", "Roboto", sans-serif;
 }
 
-#song-generator .card.col {
+#song-generator .card.col, #song-detail .card.col {
     margin-top: 3em;
 }
 

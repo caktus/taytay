@@ -74,7 +74,7 @@ def song_generator(request):
         title = request.session.get('title')
         song = request.session.get('song')
         if title and song:
-            new_song = models.UserSong.objects.create(title=title, song=song)
+            new_song = models.UserSong.objects.create(title=title, lyrics=song)
             return redirect(new_song)
     form = SongForm(request.GET)
     if form.is_valid():

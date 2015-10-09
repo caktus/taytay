@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body-id %}song-detail{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="card col s12 l8 offset-l2">
+            <div class="card-content">
+                <h4>{{ song.title }}</h4>
+                {{ song.lyrics|linebreaks }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 l8 offset-l2 right-align">
+            <a class="teal btn" href="{% url 'new-song' %}">Create a Song</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
