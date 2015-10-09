@@ -11,3 +11,7 @@ body {
 #homepage #index-banner {
     height: 700px;
 }
+
+#song-generator .card.col {
+    margin-top: 3em;
+}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body-id %}song-generator{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="card col s12 l8 offset-l2">
+            <div class="card-content">
+                {% lorem 3 p %}
+            </div>
+            <div class="card-action right-align">
+                <a class="teal-text" href="">New Song</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
