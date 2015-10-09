@@ -65,16 +65,16 @@ class SongForm(forms.ModelForm):
 
 def song_generator(request):
     """Generate a new song."""
-    song = make_song()
-    title = make_title(song)
+    album = None
     context = {
-        'albums': '',
         'song': '',
         'title': '',
     }
     form = SongForm(request.GET)
     if form.is_valid():
-        # TODO: Do something with the selected album
-        pass
+        album = form.cleaned_data['album'].title
+    song = make_song(album=album)
+    context['song'] = song
+    context['title'] = make_title(song)
     context['form'] = form
     return render(request, 'taytay/song-generator.html', context)
