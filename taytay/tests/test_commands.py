@@ -70,7 +70,7 @@ class FetchSongDataTestCase(CommandMixin, TestCase):
         ]
         self.call_command()
         mock_get.assert_called_with(
-            'https://baelor.io/api/v0/albums', headers={'Authorization': 'XXXXXX'})
+            'https://baelor.io/api/v0/albums', headers={'Authorization': 'bearer XXXXXX'})
         albums = models.Album.objects.all()
         self.assertEqual(albums.count(), 1)
         self.assertEqual(albums[0].title, 'Taylor Swift')
@@ -90,7 +90,7 @@ class FetchSongDataTestCase(CommandMixin, TestCase):
         with self.assertRaises(CommandError):
             self.call_command()
         mock_get.assert_called_with(
-            'https://baelor.io/api/v0/albums', headers={'Authorization': 'XXXXXX'})
+            'https://baelor.io/api/v0/albums', headers={'Authorization': 'bearer XXXXXX'})
         albums = models.Album.objects.all()
         self.assertEqual(albums.count(), 0)
 
@@ -209,7 +209,7 @@ class FetchSongDataTestCase(CommandMixin, TestCase):
         ]
         self.call_command()
         mock_get.assert_called_with(
-            'https://baelor.io/api/v0/songs/style/lyrics', headers={'Authorization': 'XXXXXX'})
+            'https://baelor.io/api/v0/songs/style/lyrics', headers={'Authorization': 'bearer XXXXXX'})
         songs = models.Song.objects.all()
         self.assertEqual(songs.count(), 1)
         self.assertEqual(songs[0].title, 'Style')

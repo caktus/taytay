@@ -13,7 +13,7 @@ class Command(BaseCommand):
         api_key = getattr(settings, 'BAELOR_API_KEY', None)
         if not api_key:
             raise CommandError('BAELOR_API_KEY has not been configured.')
-        auth = {'Authorization': api_key}
+        auth = {'Authorization': 'bearer {}'.format(api_key)}
         # Get albums
         response = requests.get('https://baelor.io/api/v0/albums', headers=auth).json()
         if response['error']:
