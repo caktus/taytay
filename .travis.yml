@@ -9,7 +9,7 @@ addons:
   postgresql: "9.3"
 
 env:
-  - SECRET_KEY="thisisverysecret",BAELOR_API_KEY="XXXXXX"
+  - SECRET_KEY="thisisverysecretandveryveryveryveryveryveryveryveryveryveryverylong",BAELOR_API_KEY="XXXXXX"
 
 cache:
   directories:
