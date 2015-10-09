@@ -2,6 +2,8 @@
 
 {% block body-id %}homepage{% endblock %}
 
+{% block nav-wrapper %}{% endblock %}
+
 {% block content %}
 <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
@@ -12,7 +14,7 @@
                 <h5 class="header col s12 white-text">Create your songs in the style of Taylor Swift</h5>
             </div>
             <div class="row center">
-                <a href="" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Create a Song</a>
+                <a href="{% url 'new-song' %}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Create a Song</a>
             </div>
             <br><br>
         </div>
@@ -36,25 +38,4 @@
         </div>
     </div>
 </div>
-
-<footer class="page-footer teal">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">About This Project</h5>
-                <p class="grey-text text-lighten-4">
-                This is a Ship It Day project from a small team at <a class="brown-text text-darken-2" href="https://caktusgroup.com/">
-Caktus Group</a> to experiment with natural language processing. This is built with Python and
-Django. You can find the <a class="brown-text text-darken-2" href="http://github.com/caktus/taytay/">source code on Github</a>.
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            Made by <a class="brown-text text-darken-3" href="https://caktusgroup.com">Caktus Group</a> &copy; {% now 'Y' %}
-        </div>
-    </div>
-</footer>
-
 {% endblock %}
