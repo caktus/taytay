@@ -46,6 +46,5 @@ class UserSong(models.Model):
 
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=32, unique=True, default=slug)
-    album = models.ForeignKey(Album, null=True, blank=True)
     lyrics = models.TextField()
     created_date = models.DateTimeField(default=now)

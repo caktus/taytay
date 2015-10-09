@@ -21,7 +21,6 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField(default=taytay.models.slug, max_length=32, unique=True)),
                 ('lyrics', models.TextField()),
                 ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('album', models.ForeignKey(blank=True, to='taytay.Album', null=True)),
             ],
         ),
     ]
