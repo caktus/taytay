@@ -10,6 +10,11 @@
                 <h4>{{ title }}</h4>
                 {{ song|linebreaks }}
             </div>
+            <div class="card-action right-align">
+                <form action="" method="post">{% csrf_token %}
+                    <button class="teal-text btn-flat">Save Song</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -19,7 +24,7 @@
                 {{ form.album.label_tag }}
             </div>
             <div class="input-field col s6 right-align">
-                <button class="teal-text btn-flat" href="">New Song</button>
+                <button class="teal-text btn-flat">New Song</button>
             </div>
         </form>
     </div>

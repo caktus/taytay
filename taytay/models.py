@@ -1,5 +1,9 @@
+import uuid
+
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.utils.timezone import now
 
 
 class Album(models.Model):
@@ -31,3 +35,23 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
+
+
+def slug():
+    """Generate a nice random string."""
+    return '{0:x}'.format(uuid.uuid4().int)
+
+
+class UserSong(models.Model):
+    """Generated songs that the user liked enough to save."""
+
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=32, unique=True, default=slug)
+    lyrics = models.TextField()
+    created_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('song-detail', kwargs={'slug': self.slug})

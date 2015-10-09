@@ -25,5 +25,6 @@ from . import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^generate/$', views.song_generator, name='new-song'),
+    url(r'^s/(?P<slug>\w{32})/', views.song_detail, name='song-detail'),
     url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

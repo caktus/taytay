@@ -1,5 +1,5 @@
 from django import forms
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render, redirect
 from taytay.models import Song
 import markovify
 
@@ -70,6 +70,12 @@ def song_generator(request):
         'song': '',
         'title': '',
     }
+    if request.method == 'POST':
+        title = request.session.get('title')
+        song = request.session.get('song')
+        if title and song:
+            new_song = models.UserSong.objects.create(title=title, lyrics=song)
+            return redirect(new_song)
     form = SongForm(request.GET)
     if form.is_valid():
         album = form.cleaned_data['album'].title
@@ -77,4 +83,13 @@ def song_generator(request):
     context['song'] = song
     context['title'] = make_title(song)
     context['form'] = form
+    request.session['title'] = context['title']
+    request.session['song'] = song
     return render(request, 'taytay/song-generator.html', context)
+
+
+def song_detail(request, slug):
+    """Show the details of a saved song."""
+    song = get_object_or_404(models.UserSong, slug=slug)
+    context = {'song': song}
+    return render(request, 'taytay/song-detail.html', context)
