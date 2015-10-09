@@ -16,7 +16,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 </head>
 <body id="{% block body-id %}body{% endblock %}" class="{% block body-class %}body{% endblock %}">
-    <div class="main">{% block content %}{% endblock %}</div>
+    <div class="main">
+        {% block nav-wrapper %}
+            <nav class="teal lighten-2">
+                <div class="nav-wrapper container">
+                    <a href="{% url 'home' %}" class="brand-logo">Taylor Swift Lyric Generator</a>
+                </div>
+            </nav>
+        {% endblock %}
+        {% block content %}{% endblock %}
+    </div>
     <footer class="page-footer teal">
         <div class="container">
             <div class="row">
