@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.timezone import now
@@ -48,3 +49,9 @@ class UserSong(models.Model):
     slug = models.SlugField(max_length=32, unique=True, default=slug)
     lyrics = models.TextField()
     created_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('song-detail', kwargs={'slug': self.slug})

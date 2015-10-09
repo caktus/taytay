@@ -1,5 +1,5 @@
 from django import forms
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from taytay.models import Song
 import markovify
 
@@ -86,3 +86,10 @@ def song_generator(request):
     request.session['title'] = context['title']
     request.session['song'] = song
     return render(request, 'taytay/song-generator.html', context)
+
+
+def song_detail(request, slug):
+    """Show the details of a saved song."""
+    song = get_object_or_404(models.UserSong, slug=slug)
+    context = {'song': song}
+    return render(request, 'taytay/song-detail.html', context)
