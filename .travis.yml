@@ -8,6 +8,9 @@ python:
 addons:
   postgresql: "9.3"
 
+env:
+  - SECRET_KEY="thisisverysecret",BAELOR_API_KEY="XXXXXX"
+
 cache:
   directories:
     - $HOME/.cache/pip
