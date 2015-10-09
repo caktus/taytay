@@ -1,0 +1,24 @@
+language: python
+
+sudo: false
+
+python:
+  - "3.4"
+
+addons:
+  postgresql: "9.3"
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+install:
+  - pip install -U pip
+  - make dev
+
+before_script:
+  - createdb -E UTF-8 taytay -U postgres -O $USER
+
+script:
+  - make lint
+  - make test
