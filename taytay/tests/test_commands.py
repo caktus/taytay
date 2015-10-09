@@ -75,6 +75,25 @@ class FetchSongDataTestCase(CommandMixin, TestCase):
         self.assertEqual(albums.count(), 1)
         self.assertEqual(albums[0].title, 'Taylor Swift')
 
+    def test_album_error(self, mock_get):
+        """Handle errors when fetching albums."""
+        album_response = Mock()
+        album_response.json.return_value = {
+            "result": [
+            ],
+            "error": '0x1073',
+            "success": False
+        }
+        mock_get.side_effect = [
+            album_response,
+        ]
+        with self.assertRaises(CommandError):
+            self.call_command()
+        mock_get.assert_called_with(
+            'https://baelor.io/api/v0/albums', headers={'Authorization': 'XXXXXX'})
+        albums = models.Album.objects.all()
+        self.assertEqual(albums.count(), 0)
+
     def test_fetch_lyrics(self, mock_get):
         """Fetch lyrics for each of the songs."""
         album_response = Mock()
@@ -194,3 +213,67 @@ class FetchSongDataTestCase(CommandMixin, TestCase):
         songs = models.Song.objects.all()
         self.assertEqual(songs.count(), 1)
         self.assertEqual(songs[0].title, 'Style')
+
+    def test_no_lyrics(self, mock_get):
+        """Skip if lyrics aren't avaliable."""
+        album_response = Mock()
+        album_response.json.return_value = {
+            "result": [
+                {
+                    "slug": "1989",
+                    "name": "1989",
+                    "released_at": "2014-10-27T00:00:00",
+                    "length": "01:08:36",
+                    "label": "Big Machine",
+                    "genres": [
+                        "Pop",
+                        "Synthpop"
+                    ],
+                    "producers": [
+                        "Max Martin",
+                        "Taylor Swift",
+                        "Jack Antonoff",
+                        "Nathan Chapman",
+                        "Imogen Heap",
+                        "Greg Kurstin",
+                        "Mattman & Robin",
+                        "Ali Payami",
+                        "Shellback",
+                        "Ryan Tedder",
+                        "Noel Zancanella"
+                    ],
+                    "songs": [
+                        {
+                            "index": 3,
+                            "slug": "style",
+                            "title": "Style",
+                            "length": "00:03:51",
+                            "writers": [
+                                "Taylor Swift",
+                                "Max Martin",
+                                "Shellback",
+                                "Ali Payami"
+                            ],
+                            "producers": [
+                                "Max Martin",
+                                "Shellback",
+                                "Ali Payami"
+                            ],
+                            "has_lyrics": False
+                        },
+                    ],
+                    "album_cover": {
+                        "image_id": "ca9232a3-363a-4be6-2870-08d21467e516"
+                    }
+                },
+            ],
+            "error": None,
+            "success": True
+        }
+        mock_get.side_effect = [
+            album_response,
+        ]
+        self.call_command()
+        self.assertEqual(mock_get.call_count, 1)
+        songs = models.Song.objects.all()
+        self.assertEqual(songs.count(), 0)
