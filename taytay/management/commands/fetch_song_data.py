@@ -14,36 +14,30 @@ class Command(BaseCommand):
         if not api_key:
             raise CommandError('BAELOR_API_KEY has not been configured.')
         auth = {'Authorization': 'bearer {}'.format(api_key)}
-        # Get albums
-        response = requests.get('https://baelor.io/api/v0/albums', headers=auth).json()
+        response = requests.get('https://baelor.io/api/v0/songs', headers=auth).json()
         if response['error']:
-            raise CommandError('Error fetching albums: {error}'.format(**response))
+            raise CommandError('Error fetching songs: {error}'.format(**response))
         else:
-            for item in response['result']:
-                slug = item['slug']
-                additional = {
-                    'title': item['name'],
-                    'label': item['label'],
-                    'genres': item['genres'],
-                    'producers': item['producers'],
+            albums = {}
+            for song in response['result']:
+                song_slug = song['slug']
+                song_info = {
+                    'title': song['title'],
+                    'writers': song['writers'],
+                    'producers': song['producers'],
                 }
-                album, _ = models.Album.objects.update_or_create(
-                    slug=slug, defaults=additional)
-                for song in item['songs']:
-                    if song['has_lyrics']:
-                        lyrics = requests.get(
-                            'https://baelor.io/api/v0/songs/{slug}/lyrics'.format(**song),
-                            headers=auth).json()
-                        if lyrics['error']:
-                            self.stderr.write(
-                                'Error fetching song "{title}": {error}\n'.format(**song))
-                        else:
-                            rest = {
-                                'title': song['title'],
-                                'album': album,
-                                'lyrics': lyrics['result']['lyrics'],
-                                'writers': song['writers'],
-                                'producers': song['producers'],
-                            }
-                            models.Song.objects.update_or_create(
-                                slug=song['slug'], defaults=rest)
+                album = song['album']
+                album_slug = album['slug']
+                album_info = {
+                    'title': album['name'],
+                    'label': album['label'],
+                    'genres': album['genres'],
+                    'producers': album['producers'],
+                }
+                if album_slug not in albums:
+                    albums[album_slug], _ = models.Album.objects.update_or_create(
+                        slug=album_slug, defaults=album_info)
+                song_info['album'] = albums[album_slug]
+                song_info['lyrics'] = '\n'.join(line['content'] for line in song['lyrics'])
+                models.Song.objects.update_or_create(
+                    slug=song_slug, defaults=song_info)
