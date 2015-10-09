@@ -10,10 +10,18 @@
                 <h4>{{ title }}</h4>
                 {{ song|linebreaks }}
             </div>
-            <div class="card-action right-align">
-                <a class="teal-text" href="">New Song</a>
-            </div>
         </div>
+    </div>
+    <div class="row">
+        <form action="" method="get" class="col s12 l8 offset-l2">
+            <div class="input-field col s6">
+                {{ form.album }}
+                {{ form.album.label_tag }}
+            </div>
+            <div class="input-field col s6 right-align">
+                <button class="teal-text btn-flat" href="">New Song</button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}
