@@ -48,13 +48,17 @@ Connecting to the API
 To connect to the API at baelor.io, you'll need to create a user using the
 following curl command ::
 
-    curl -H "Content-Type: application/json" -X POST -d
+    $ curl -H "Content-Type: application/json" -X POST -d
     '{"username": "yourusername","email_address": "youremail",
     "password": "yourpassword","password_confirm": "yourpassword"}'
     http://baelor.io/api/v0/users
 
-You should receive an API key in the response.
+You should receive an API key in the response. To make use of this key, you should
+include it in your ``.env`` file::
 
+    $ echo 'BAELOR_API_KEY="<api key>"' >> .env
+
+Where ``<api key>`` would be replaced with your actual API key value.
 
 
 Testing

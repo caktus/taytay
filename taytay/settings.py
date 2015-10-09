@@ -160,3 +160,7 @@ SILENCED_SYSTEM_CHECKS = [
     # Not enabling HSTS for all subdomains
     'security.W005'
 ]
+
+# New settings
+
+BAELOR_API_KEY = os.environ.get('BAELOR_API_KEY', '')
