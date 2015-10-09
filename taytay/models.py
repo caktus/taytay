@@ -1,5 +1,8 @@
+import uuid
+
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.utils.timezone import now
 
 
 class Album(models.Model):
@@ -31,3 +34,18 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
+
+
+def slug():
+    """Generate a nice random string."""
+    return '{0:x}'.format(uuid.uuid4().int)
+
+
+class UserSong(models.Model):
+    """Generated songs that the user liked enough to save."""
+
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=32, unique=True, default=slug)
+    album = models.ForeignKey(Album, null=True, blank=True)
+    lyrics = models.TextField()
+    created_date = models.DateTimeField(default=now)
