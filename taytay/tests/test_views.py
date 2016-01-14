@@ -18,6 +18,8 @@ class SongGeneratorTestCase(TestCase):
         with self.assertTemplateUsed('taytay/song-generator.html'):
             response = self.client.get(reverse('new-song'))
             self.assertEqual(response.status_code, 200)
+            mock_song.assert_called_with(album=None)
+            mock_title.assert_called_with(mock_song.return_value)
 
     @patch("taytay.views.make_song")
     @patch("taytay.views.make_title")
