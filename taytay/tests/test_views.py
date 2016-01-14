@@ -32,6 +32,17 @@ class SongGeneratorTestCase(TestCase):
         self.assertEqual(song.title, 'Shake It Off')
         self.assertRedirects(response, song.get_absolute_url())
 
+    @patch("taytay.views.make_song")
+    @patch("taytay.views.make_title")
+    def test_failed_save(self, mock_title, mock_song):
+        """Can't save if there is no song in the session."""
+        mock_song.return_value = 'Shake it off...'
+        mock_title.return_value = 'Shake It Off'
+        response = self.client.post(reverse('new-song'))
+        self.assertEqual(response.status_code, 200)
+        with self.assertRaises(models.UserSong.DoesNotExist):
+            models.UserSong.objects.latest('created_date')
+
 
 class SongDetailTestCase(TestCase):
     """Details of a newly generated song."""
