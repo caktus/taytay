@@ -60,6 +60,12 @@ include it in your ``.env`` file::
 
 Where ``<api key>`` would be replaced with your actual API key value.
 
+Get song data
+-------------
+
+To get song data run the `fetch_song_data` command ::
+
+    $ python manage.py fetch_song_data
 
 Testing
 -------
