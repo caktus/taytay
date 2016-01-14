@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('lyrics', models.TextField()),
                 ('writers', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), size=10)),
                 ('producers', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=100), size=10)),
-                ('album', models.ForeignKey(to='taytay.Album')),
+                ('album', models.ForeignKey(to='taytay.Album', on_delete=models.CASCADE)),
             ],
         ),
     ]
