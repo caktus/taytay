@@ -55,3 +55,7 @@ class UserSong(models.Model):
 
     def get_absolute_url(self):
         return reverse('song-detail', kwargs={'slug': self.slug})
+
+    def preview(self):
+        """Returns the first stanza of the song."""
+        return self.lyrics.split('\n\n')[0]
