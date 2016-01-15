@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from .. import models
-from ..views import make_song
+from ..views import make_song, make_title
 
 
 class SongGeneratorTestCase(TestCase):
@@ -65,7 +65,7 @@ class SongGeneratorTestCase(TestCase):
         mock_markov.assert_called_with('Loving him was red.Shake it off.', state_size=2)
 
     @patch("markovify.text.NewlineText")
-    def test_make_song_singl_album(self, mock_markov):
+    def test_make_song_single_album(self, mock_markov):
         """Feeding only a single album into the markov model."""
         mock_markov.return_value.make_sentence.return_value = 'Shake it off.'
         red = models.Album.objects.create(
@@ -81,6 +81,18 @@ class SongGeneratorTestCase(TestCase):
         result = make_song(album='Red')
         self.assertEqual(len(result.splitlines()), 28)
         mock_markov.assert_called_with('Loving him was red.', state_size=2)
+
+    @patch("markovify.text.NewlineText")
+    def test_make_title(self, mock_markov):
+        """Generate a title for a song."""
+        mock_markov.return_value.make_sentence.side_effect = [None, 'I go on too many dates']
+        song = '''I stay up too late, got nothing in my brain
+            That's what people say mmm, that's what people say mm
+            I go on too many dates, but I can't make 'em stay
+            At least that's what people say mmm, that's what people say mmm'''
+        result = make_title(song=song)
+        mock_markov.assert_called_with(song)
+        self.assertEqual(result, 'I Go On')
 
 
 class SongDetailTestCase(TestCase):

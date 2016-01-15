@@ -46,7 +46,7 @@ def make_title(song):
         if title is not None:
             title_list = title.split(" ")
             title = " ".join(title_list[0:3])
-            return title
+            return title.title()
 
 
 class SongForm(forms.ModelForm):
