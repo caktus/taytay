@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 
 import dj_database_url
 
@@ -166,3 +167,14 @@ SILENCED_SYSTEM_CHECKS = [
 # New settings
 
 BAELOR_API_KEY = os.environ.get('BAELOR_API_KEY', '')
+
+# Conditional test settings
+if 'test' in sys.argv:
+    LOGGING['root']['level'] = 'WARNING'
+
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.SHA1PasswordHasher',
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    )

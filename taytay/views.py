@@ -1,15 +1,17 @@
 from django import forms
 from django.shortcuts import get_object_or_404, render, redirect
-from taytay.models import Song
+
 import markovify
+
+from . import models
 
 
 def make_markov_chain(album):
     lyrics = ""
     if album is not None:
-        qs = Song.objects.filter(album__title=album)
+        qs = models.Song.objects.filter(album__title=album)
     else:
-        qs = Song.objects.all()
+        qs = models.Song.objects.all()
     for i in qs:
         lyrics += i.lyrics
 
@@ -44,9 +46,7 @@ def make_title(song):
         if title is not None:
             title_list = title.split(" ")
             title = " ".join(title_list[0:3])
-            return title
-
-from . import models
+            return title.title()
 
 
 class SongForm(forms.ModelForm):
@@ -64,6 +64,7 @@ class SongForm(forms.ModelForm):
         self.fields['title'].label = "Generate Based on a Title"
         self.fields['album'].required = False
         self.fields['title'].required = False
+
 
 def song_generator(request):
     """Generate a new song."""

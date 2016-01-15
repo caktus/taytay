@@ -12,6 +12,12 @@ local development system:
 - Postgres >= 9.3
 - git >= 1.7
 
+.. image:: https://travis-ci.org/caktus/taytay.svg?branch=master
+    :target: https://travis-ci.org/caktus/taytay
+
+.. image:: https://codecov.io/github/caktus/taytay/coverage.svg?branch=master
+    :target: https://codecov.io/github/caktus/taytay?branch=master
+
 
 Getting Started
 ---------------

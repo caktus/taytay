@@ -26,7 +26,7 @@ class Song(models.Model):
 
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    album = models.ForeignKey(Album)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
     lyrics = models.TextField()
     writers = ArrayField(
         models.CharField(max_length=100), size=10)
