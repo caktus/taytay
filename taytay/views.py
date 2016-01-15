@@ -113,8 +113,13 @@ class HomepageView(TemplateView):
 
 
 class SongListView(ListView):
-    template_name = 'taytay/song-list.html'
     queryset = models.UserSong.objects.all()
     context_object_name = 'songs'
     allow_empty = False
     paginate_by = 24
+
+    def get_template_names(self):
+        if self.request.is_ajax():
+            return 'taytay/_songs.html'
+        else:
+            return 'taytay/song-list.html'
