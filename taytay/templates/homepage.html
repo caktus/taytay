@@ -14,11 +14,21 @@
                 <h5 class="header col s12 white-text">Create your songs in the style of Taylor Swift</h5>
             </div>
             <div class="row center">
-                <a href="{% url 'new-song' %}" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Create a Song</a>
+                <a href="{% url 'new-song' %}" id="create-button" class="btn-large waves-effect waves-light teal lighten-1">Create a Song</a>
+                <form action="{% url 'new-song' %}" method="get" class="col s12 l8 offset-l2 card-panel white">
+                    <div class="input-field col s9">
+                        {{ form.title }}
+                        {{ form.title.label_tag}}
+                    </div>
+                    <div class="input-field col s3 right-align">
+                        <button class="teal-text btn-flat">Generate</button>
+                    </div>
+                </form>
             </div>
             <br><br>
         </div>
     </div>
+
     <div class="parallax">
         <img src="http://images1.mtv.com/uri/mgid:file:docroot:mtv.com:/shared/promoimages/bands/s/swift_taylor/a_z/2014/press/taylor_swift.jpg?enlarge=false&maxdimension=1300&matte=true&matteColor=black&quality=0.85" alt="Unsplashed background img 1" style="display: block; transform: translate3d(-50%, 200px, 0px);">
     </div>

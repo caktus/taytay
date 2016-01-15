@@ -33,6 +33,9 @@ nav .brand-logo .taylor {
     font-family: "satisfaction", "Roboto", sans-serif;
 }
 
+#homepage #index-banner form {
+    display: none;
+}
 #song-generator .card.col, #song-detail .card.col {
     margin-top: 3em;
 }

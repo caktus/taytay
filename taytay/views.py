@@ -1,5 +1,6 @@
 from django import forms
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.generic import TemplateView
 
 import markovify
 
@@ -98,3 +99,12 @@ def song_detail(request, slug):
     song = get_object_or_404(models.UserSong, slug=slug)
     context = {'song': song}
     return render(request, 'taytay/song-detail.html', context)
+
+
+class HomepageView(TemplateView):
+    template_name = 'homepage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = SongForm()
+        return context
