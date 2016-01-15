@@ -105,6 +105,8 @@ class HomepageView(TemplateView):
     template_name = 'homepage.html'
 
     def get_context_data(self, **kwargs):
+        form = SongForm(label_suffix="")
+        form.fields['title'].label = "Give your song a title."
         context = super().get_context_data(**kwargs)
-        context['form'] = SongForm()
+        context['form'] = form
         return context
