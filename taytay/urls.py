@@ -17,7 +17,6 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
 
 from . import views
 
@@ -26,5 +25,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^generate/$', views.song_generator, name='new-song'),
     url(r'^s/(?P<slug>\w{1,32})/', views.song_detail, name='song-detail'),
-    url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
+    url(r'^$', views.HomepageView.as_view(), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
