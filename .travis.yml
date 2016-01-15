@@ -16,7 +16,7 @@ cache:
     - $HOME/.cache/pip
 
 install:
-  - pip install -U pip
+  - pip install -U pip wheel codecov
   - make dev
 
 before_script:
@@ -25,3 +25,10 @@ before_script:
 script:
   - make lint
   - make test
+
+after_success:
+  - codecov
+
+branches:
+  only:
+    - master
