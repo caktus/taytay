@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% block card-title %}{{ song.title }} | Generated Taylor Swift Lyrics{% endblock %}
+
+{% block card-description %}
+Enjoy this great song generated in the style of Taylor Swift!
+
+{{ song.lyrics|truncatewords:25 }}
+{% endblock %}
+
 {% block body-id %}song-detail{% endblock %}
 
 {% block content %}
