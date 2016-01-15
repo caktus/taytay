@@ -54,18 +54,21 @@ class SongForm(forms.ModelForm):
 
     class Meta:
         model = models.Song
-        fields = ('album', )
+        fields = ('album', 'title')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['album'].empty_label = 'Select an album...'
         self.fields['album'].label = 'Generate Based on an Album'
         self.fields['album'].to_field_name = 'slug'
-
+        self.fields['title'].label = "Generate Based on a Title"
+        self.fields['album'].required = False
+        self.fields['title'].required = False
 
 def song_generator(request):
     """Generate a new song."""
     album = None
+    title = None
     context = {
         'song': '',
         'title': '',
@@ -78,10 +81,11 @@ def song_generator(request):
             return redirect(new_song)
     form = SongForm(request.GET)
     if form.is_valid():
-        album = form.cleaned_data['album'].title
-    song = make_song(album=album)
+        album = form.cleaned_data['album']
+        title = form.cleaned_data['title'] or None
+    song = make_song(album=album.title if album else None)
     context['song'] = song
-    context['title'] = make_title(song)
+    context['title'] = title or make_title(song)
     context['form'] = form
     request.session['title'] = context['title']
     request.session['song'] = song
