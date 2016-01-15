@@ -23,6 +23,7 @@ from . import views
 urlpatterns = [
     url(r'^generate/$', views.song_generator, name='new-song'),
     url(r'^s/$', views.SongListView.as_view(), name='song-list'),
+    url(r'^generate-cloud/$', views.word_frequencies, name='word-cloud'),
     url(r'^s/(?P<slug>\w{1,32})/$', views.song_detail, name='song-detail'),
     url(r'^$', views.HomepageView.as_view(), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

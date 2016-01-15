@@ -1,5 +1,7 @@
 from django import forms
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import TemplateView, ListView
 
 import markovify
@@ -94,6 +96,7 @@ def song_generator(request):
     return render(request, 'taytay/song-generator.html', context)
 
 
+@require_GET
 def song_detail(request, slug):
     """Show the details of a saved song."""
     song = get_object_or_404(models.UserSong, slug=slug)
@@ -122,4 +125,28 @@ class SongListView(ListView):
         if self.request.is_ajax():
             return 'taytay/_songs.html'
         else:
-            return 'taytay/song-list.html'
+            return 'taytay/song-listi.html'
+
+
+def calculate_next_word(current):
+    """Calculate most likely next word based on current word."""
+    text = make_markov_chain(None)
+    default = markovify.chain.BEGIN
+    first = default
+    second = default
+    if current:
+        try:
+            *rest, first, second = current.split(' ')
+        except ValueError:
+            *rest, second = current.split(' ')
+    try:
+        return text.chain.model[(first, second)]
+    except KeyError:
+        return text.chain.model[(default, default)]
+
+
+@require_POST
+def word_frequencies(request):
+    """Generate next word frequencies from current text."""
+    current = request.POST.get('text', '') or ''
+    return JsonResponse(calculate_next_word(current))
