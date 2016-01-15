@@ -65,6 +65,7 @@ class SongForm(forms.ModelForm):
         self.fields['album'].required = False
         self.fields['title'].required = False
 
+
 def song_generator(request):
     """Generate a new song."""
     album = None

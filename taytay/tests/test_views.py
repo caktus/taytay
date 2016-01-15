@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from .. import models
+from ..views import make_song
 
 
 class SongGeneratorTestCase(TestCase):
@@ -44,6 +45,42 @@ class SongGeneratorTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         with self.assertRaises(models.UserSong.DoesNotExist):
             models.UserSong.objects.latest('created_date')
+
+    @patch("markovify.text.NewlineText")
+    def test_make_song_all_albums(self, mock_markov):
+        """Feeding all lyrics into the markov model."""
+        mock_markov.return_value.make_sentence.return_value = 'Shake it off.'
+        red = models.Album.objects.create(
+            title='Red', slug='red', producers=[], genres=[])
+        models.Song.objects.create(
+            title='Red', slug='red', album=red, producers=[], writers=[],
+            lyrics='Loving him was red.')
+        swift = models.Album.objects.create(
+            title='1989', slug='1989', producers=[], genres=[])
+        models.Song.objects.create(
+            title='Shake It Off', slug='shake-it-off', album=swift, producers=[], writers=[],
+            lyrics='Shake it off.')
+        result = make_song()
+        self.assertEqual(len(result.splitlines()), 28)
+        mock_markov.assert_called_with('Loving him was red.Shake it off.', state_size=2)
+
+    @patch("markovify.text.NewlineText")
+    def test_make_song_singl_album(self, mock_markov):
+        """Feeding only a single album into the markov model."""
+        mock_markov.return_value.make_sentence.return_value = 'Shake it off.'
+        red = models.Album.objects.create(
+            title='Red', slug='red', producers=[], genres=[])
+        models.Song.objects.create(
+            title='Red', slug='red', album=red, producers=[], writers=[],
+            lyrics='Loving him was red.')
+        swift = models.Album.objects.create(
+            title='1989', slug='1989', producers=[], genres=[])
+        models.Song.objects.create(
+            title='Shake It Off', slug='shake-it-off', album=swift, producers=[], writers=[],
+            lyrics='Shake it off.')
+        result = make_song(album='Red')
+        self.assertEqual(len(result.splitlines()), 28)
+        mock_markov.assert_called_with('Loving him was red.', state_size=2)
 
 
 class SongDetailTestCase(TestCase):
