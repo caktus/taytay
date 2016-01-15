@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{% block meta-description %}Generate your own song in the style of Taylor Swift.{% endblock %}">
     <meta name="author" content="{% block meta-author %}Caktus Group{% endblock %}">
+    {% block twitter-card %}
+    <meta name="twitter:card" content="{% block card-type %}summary{% endblock %}" />
+    <meta name="twitter:site" content="@CaktusGroup" />
+    <meta name="twitter:title" content="{% block card-title %}Taylor Swift Lyric Generator{% endblock %}" />
+    <meta name="twitter:description" content="{% block card-description %}Generate your own song in the style of Taylor Swift.{% endblock %}" />
+    {% endblock %}
     {% block extra-meta %}
     {% endblock %}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
