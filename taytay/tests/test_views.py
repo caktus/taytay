@@ -107,3 +107,23 @@ class SongDetailTestCase(TestCase):
         with self.assertTemplateUsed('taytay/song-detail.html'):
             response = self.client.get(self.song.get_absolute_url())
             self.assertEqual(response.status_code, 200)
+
+
+class SongListTestCase(TestCase):
+    """Listing previously generated songs."""
+
+    def setUp(self):
+        self.song = models.UserSong.objects.create(
+            title='Shake It Off', lyrics='I stay out too late...')
+
+    def test_render_page(self):
+        """View the song list."""
+        with self.assertTemplateUsed('taytay/song-list.html'):
+            response = self.client.get(reverse('song-list'))
+            self.assertEqual(response.status_code, 200)
+
+    def test_render_ajax(self):
+        """View the song list via AJAX call."""
+        with self.assertTemplateUsed('taytay/_songs.html'):
+            response = self.client.get(reverse('song-list'), HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+            self.assertEqual(response.status_code, 200)

@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import get_object_or_404, render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 import markovify
 
@@ -110,3 +110,16 @@ class HomepageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['form'] = form
         return context
+
+
+class SongListView(ListView):
+    queryset = models.UserSong.objects.order_by('title')
+    context_object_name = 'songs'
+    allow_empty = False
+    paginate_by = 24
+
+    def get_template_names(self):
+        if self.request.is_ajax():
+            return 'taytay/_songs.html'
+        else:
+            return 'taytay/song-list.html'

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block body-id %}song-list{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 center-align"><h2>Previously Saved Songs</h2></div>
+    </div>
+    <div class="row">
+        {% include "taytay/_songs.html" %}
+    </div>
+</div>
+{% endblock %}
