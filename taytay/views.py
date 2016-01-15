@@ -113,7 +113,7 @@ class HomepageView(TemplateView):
 
 
 class SongListView(ListView):
-    queryset = models.UserSong.objects.all()
+    queryset = models.UserSong.objects.order_by('title')
     context_object_name = 'songs'
     allow_empty = False
     paginate_by = 24
