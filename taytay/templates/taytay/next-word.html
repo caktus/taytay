@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block extra-js %}
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="{% static 'js/bubbles.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="row">
+  <form class="col s6">
+    <div class="row">
+      <div class="input-field col s6">
+          <textarea placeholder="Lyrics" id="textarea1" class="materialize-textarea"></textarea>
+            <label for="textarea1">Your Song Lyrics</label>
+      </div>
+     </div>
+ </form>
+     <div id="container" class="col s6">
+         <h4>What would Taylor would say next?</h4>
+     </div>
+</div>
+
+{% endblock content %}

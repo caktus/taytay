@@ -101,6 +101,11 @@ def song_detail(request, slug):
     return render(request, 'taytay/song-detail.html', context)
 
 
+def next_word(request):
+    """Visualize the next word possibilities"""
+    return render(request, 'taytay/next-word.html')
+
+
 class HomepageView(TemplateView):
     template_name = 'homepage.html'
 

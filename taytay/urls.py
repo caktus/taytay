@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^s/$', views.SongListView.as_view(), name='song-list'),
     url(r'^s/(?P<slug>\w{1,32})/$', views.song_detail, name='song-detail'),
     url(r'^$', views.HomepageView.as_view(), name='home'),
+    url(r'^next-word/$', views.next_word, name='next-word'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

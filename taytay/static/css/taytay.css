@@ -49,3 +49,7 @@ nav .brand-logo .taylor {
 .error .page-footer {
     margin-top: 0;
 }
+
+.svg .bubble{
+    float: right;
+}
